@@ -2,7 +2,9 @@
 
 Python implementation of Conflict-based search
 
-author: Ashwin Bose (@atb033)
+original author: Ashwin Bose (@atb033)
+
+further edited by: Tim Tsz-Kit Lau (@timlautk)
 
 """
 import sys
