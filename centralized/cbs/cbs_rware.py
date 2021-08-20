@@ -17,8 +17,11 @@ from copy import deepcopy
 
 from cbs.a_star import AStar
 
+import numpy as np
 import robotic_warehouse
 from robotic_warehouse.warehouse import Warehouse, RewardType
+
+import nashpy
 
 
 class Location(object):
@@ -328,7 +331,7 @@ def main():
     #     except yaml.YAMLError as exc:
     #         print(exc)
 
-    warehouse = Warehouse(9, 8, 3, 4, 3, 1, 4, None, None, RewardType.GLOBAL)
+    warehouse = Warehouse(3, 3, 2, 4, 3, 1, 4, None, None, RewardType.GLOBAL)
     warehouse.reset()
     ## a list
     # dimension = param["map"]["dimensions"]
@@ -337,7 +340,7 @@ def main():
 
     ## a list of coordinates in tuples (x, y)
     # obstacles = param["map"]["obstacles"]
-    obstacles = [(0, 0)]
+    obstacles = [(0, 0), (5,5)]
     # print(obstacles)
 
     ## a list of dictionaries
@@ -345,6 +348,53 @@ def main():
     # agents = param['agents']    
     agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
     goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
+
+
+
+    ## Shelf requesting the closest agent to pick it up
+    def argmin(a):
+        return min(range(len(a)), key=lambda x: a[x])
+
+    def compute_dist_agents_goals(agents_loc, goals):
+        dist = []
+        for i in range(len(agents_loc)): 
+            dist.append([abs(agents_loc[i][0] - goals[j][0]) + abs(agents_loc[i][1] - goals[j][1]) for j in range(len(goals))]) 
+        return dist
+
+    def compute_dist_argmins(dist):
+        dist_argmins = []
+        for j in range(len(goals)): 
+            dist_argmins.append(argmin(dist[j]))
+        return dist_argmins
+
+    dist = compute_dist_agents_goals(agents_loc, goals)
+    print(dist)
+    dist_argmins = compute_dist_argmins(dist)
+    print(dist_argmins)
+
+    ## solve recursively
+    
+    if len(set(dist_argmins)) == len(dist_argmins):
+        goals = [goals[i] for i in dist_argmins]
+        names = [f'agent{i}' for i in range(warehouse.n_agents)]
+        agents = [{'start': agents_loc[i], 'goal': goals[i], 'name': names[i]} for i in range(len(agents_loc))]
+    else: 
+        agents = []
+        repeated_dist_argmins = []
+        for i in range(len(dist_argmins)):
+            if dist_argmins.count(i) == 1:
+                agents.append({'start': agents_loc[dist_argmins.index(i)], 'goal': goals[i], 'name': f'agent{len(agents)}'})
+            # else:
+                # agents.append({'start': agents_loc[dist_argmins.index(i)], 'goal': goals[i], 'name': f'agent{len(agents)}'})
+                # repeated_dist_argmins.append(i)
+            # print(repeated_dist_argmins)
+        
+        repeated_dist_argmins_index = []
+        for val in repeated_dist_argmins:
+            repeated_dist_argmins_index.append(repeated_dist_argmins.index(val))
+        # print(repeated_dist_argmins_index)
+    #     goals = 
+    
     names = [f'agent{i}' for i in range(warehouse.n_agents)]
     agents = [{'start': agents_loc[i], 'goal': goals[i], 'name': names[i]} for i in range(len(agents_loc))]
 

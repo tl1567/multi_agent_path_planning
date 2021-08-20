@@ -1,37 +1,40 @@
 agents:
 - goal:
-  - 11
-  - 10
+  - 8
+  - 3
   name: agent0
   start:
-  - 7
-  - 10
+  - 9
+  - 3
 - goal:
-  - 20
-  - 11
+  - 7
+  - 1
   name: agent1
   start:
-  - 13
-  - 6
+  - 3
+  - 7
 - goal:
   - 2
-  - 26
+  - 1
   name: agent2
   start:
-  - 12
-  - 23
+  - 2
+  - 8
 - goal:
-  - 16
-  - 11
+  - 2
+  - 2
   name: agent3
   start:
-  - 9
-  - 0
+  - 7
+  - 7
 map:
   dimensions:
-  - 29
-  - 28
+  - 10
+  - 10
   obstacles:
   - !!python/tuple
     - 0
     - 0
+  - !!python/tuple
+    - 5
+    - 5
