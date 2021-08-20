@@ -18,6 +18,7 @@ from copy import deepcopy
 from cbs.a_star import AStar
 
 import robotic_warehouse
+from robotic_warehouse.warehouse import Warehouse, RewardType
 
 
 class Location(object):
@@ -315,37 +316,47 @@ class CBS(object):
 
 
 def main():
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("param", help="input file containing map and obstacles")
-    # parser.add_argument("output", help="output file with the schedule")
-    # args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("param", help="input file containing map and obstacles")
+    parser.add_argument("output", help="output file with the schedule")
+    args = parser.parse_args()
 
-    # Read from input file
-    # with open(args.param, 'r') as param_file:
-    #     try:
-    #         param = yaml.load(param_file, Loader=yaml.FullLoader)
-    #     except yaml.YAMLError as exc:
-    #         print(exc)
+    ## Read from input file
+    with open(args.param, 'r') as param_file:
+        try:
+            param = yaml.load(param_file, Loader=yaml.FullLoader)
+        except yaml.YAMLError as exc:
+            print(exc)
 
-    dimension = param["map"]["dimensions"]
-    obstacles = param["map"]["obstacles"]
-    agents = param['agents']
+    ## a list
+    # dimension = param["map"]["dimensions"]
+    dimension = Warehouse(3, 8, 3, 1, 0, 1, 5, None, None, RewardType.GLOBAL)
+    # print(dimension)
+    ## a list of coordinates in tuples (x, y)
+    obstacles = param["map"]["obstacles"]   
+    obstacles = 
+    # print(obstacles)
+    ## a list of dictionaries
+    ## {'start': coordinates (list), 'goal': coordinates (list), 'name': 'agent{id}'}
+    # agents = param['agents']    
+    agents = 
+    print(agents)
 
     env = Environment(dimension, agents, obstacles)
 
-    # Searching
+    ## Searching
     cbs = CBS(env)
     solution = cbs.search()
     if not solution:
         print(" Solution not found" )
         return
 
-    # Write to output file
-    # with open(args.output, 'r') as output_yaml:
-    #     try:
-    #         output = yaml.load(output_yaml, Loader=yaml.FullLoader)
-    #     except yaml.YAMLError as exc:
-    #         print(exc)
+    ## Write to output file
+    with open(args.output, 'r') as output_yaml:
+        try:
+            output = yaml.load(output_yaml, Loader=yaml.FullLoader)
+        except yaml.YAMLError as exc:
+            print(exc)
 
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
