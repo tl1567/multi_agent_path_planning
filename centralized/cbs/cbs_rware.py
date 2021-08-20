@@ -21,8 +21,6 @@ import numpy as np
 import robotic_warehouse
 from robotic_warehouse.warehouse import Warehouse, RewardType
 
-import nashpy
-
 
 class Location(object):
     def __init__(self, x=-1, y=-1):
@@ -340,7 +338,8 @@ def main():
 
     ## a list of coordinates in tuples (x, y)
     # obstacles = param["map"]["obstacles"]
-    obstacles = [(0, 0), (5,5)]
+    # obstacles = [(0, 0), (5, 5), (8, 9)]
+    obstacles = []
     # print(obstacles)
 
     ## a list of dictionaries
@@ -356,15 +355,11 @@ def main():
         return min(range(len(a)), key=lambda x: a[x])
 
     def compute_dist_agents_goals(agents_loc, goals):
-        dist = []
-        for i in range(len(agents_loc)): 
-            dist.append([abs(agents_loc[i][0] - goals[j][0]) + abs(agents_loc[i][1] - goals[j][1]) for j in range(len(goals))]) 
+        dist = [[abs(agents_loc[i][0] - goals[j][0]) + abs(agents_loc[i][1] - goals[j][1]) for j in range(len(goals))] for i in range(len(agents_loc))]
         return dist
 
     def compute_dist_argmins(dist):
-        dist_argmins = []
-        for j in range(len(goals)): 
-            dist_argmins.append(argmin(dist[j]))
+        dist_argmins = [argmin(dist[j]) for j in range(len(goals))]
         return dist_argmins
 
     dist = compute_dist_agents_goals(agents_loc, goals)
@@ -372,7 +367,10 @@ def main():
     dist_argmins = compute_dist_argmins(dist)
     print(dist_argmins)
 
-    ## solve recursively
+    ## solve recursively the goal of each agent
+    print(min([dist[i][j] for i in range(len(agents_loc)) for j in range(len(goals))]))
+
+
     
     if len(set(dist_argmins)) == len(dist_argmins):
         goals = [goals[i] for i in dist_argmins]
