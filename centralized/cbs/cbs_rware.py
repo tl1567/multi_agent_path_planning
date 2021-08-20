@@ -317,7 +317,7 @@ class CBS(object):
 
 def main():
     parser = argparse.ArgumentParser()
-    # parser.add_argument("param", help="input file containing map and obstacles")
+    parser.add_argument("param", help="input file containing map and obstacles")
     parser.add_argument("output", help="output file with the schedule")
     args = parser.parse_args()
 
@@ -343,11 +343,18 @@ def main():
     ## a list of dictionaries
     ## {'start': coordinates (list), 'goal': coordinates (list), 'name': 'agent{id}'}
     # agents = param['agents']    
-    agents_loc = [[agent.x, agent.y] for agent in warehouse.agents]
-    goals = [[shelf.x, shelf.y] for shelf in warehouse.request_queue]
+    agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
+    goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
     names = [f'agent{i}' for i in range(warehouse.n_agents)]
     agents = [{'start': agents_loc[i], 'goal': goals[i], 'name': names[i]} for i in range(len(agents_loc))]
-    # print(agents)
+
+    ## Write to input file 
+    param = {}
+    param["map"] = {"dimensions": dimension, "obstacles": obstacles}
+    param['agents'] = agents
+
+    with open(args.param, 'w') as param_file:
+        yaml.dump(param, param_file)
 
     env = Environment(dimension, agents, obstacles)
 
@@ -358,12 +365,16 @@ def main():
         print(" Solution not found" )
         return
 
+    # print(solution)
+
     ## Write to output file
     # with open(args.output, 'r') as output_yaml:
     #     try:
     #         output = yaml.load(output_yaml, Loader=yaml.FullLoader)
     #     except yaml.YAMLError as exc:
     #         print(exc)
+    
+    output = {}
 
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)

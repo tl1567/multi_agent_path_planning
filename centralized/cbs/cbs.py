@@ -343,6 +343,7 @@ def main():
         except yaml.YAMLError as exc:
             print(exc)
 
+    
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
     with open(args.output, 'w') as output_yaml:
