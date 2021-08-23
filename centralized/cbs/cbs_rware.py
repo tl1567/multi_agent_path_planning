@@ -20,6 +20,7 @@ from cbs.a_star import AStar
 import numpy as np
 import robotic_warehouse
 from robotic_warehouse.warehouse import Warehouse, RewardType
+import gym
 
 
 class Location(object):
@@ -387,7 +388,7 @@ def main():
         while len(agents_loc) > 0:
             agents_loc, goals = assign_goal_to_agent(agents_loc, goals)
 
-    print(agents)
+    # print(agents)
     
 
 
