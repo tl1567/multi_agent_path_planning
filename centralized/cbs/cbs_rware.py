@@ -352,23 +352,14 @@ def main():
 
 
     ## Shelf requesting the closest agent to pick it up
-    # def argmin(a):
-    #     return min(range(len(a)), key=lambda x: a[x])
-
     def compute_dist_agents_goals(agents_loc, goals):
         dist = [[abs(agents_loc[i][0] - goals[j][0]) + abs(agents_loc[i][1] - goals[j][1]) for j in range(len(goals))] for i in range(len(agents_loc))]
         return dist
 
-    # def compute_dist_argmins(dist):
-    #     dist_argmins = [argmin(dist[j]) for j in range(len(dist))]
-    #     return dist_argmins
-
     dist = compute_dist_agents_goals(agents_loc, goals)
-    # print(dist)
-    # dist_argmins = compute_dist_argmins(dist)
-    # print(dist_argmins)
 
-    ## solve recursively the goal of each agent
+    ## solve recursively the goal of each agent (the agent with the minimum distance to a goal will be assigned with that goal;
+    ## both the agent and the goal will be removed from the queues, and this is done recursively)
     def assign_goal_to_agent(agents_loc, goals):
         dist = compute_dist_agents_goals(agents_loc, goals)
         dist = np.array(dist)
@@ -385,10 +376,8 @@ def main():
         agents = [{'start': agents_loc[i], 'goal': goals[i], 'name': names[i]} for i in range(len(agents_loc))]
     else: 
         agents = []
-        while len(agents_loc) > 0:
+        while len(agents_loc):
             agents_loc, goals = assign_goal_to_agent(agents_loc, goals)
-
-    # print(agents)
     
 
 
