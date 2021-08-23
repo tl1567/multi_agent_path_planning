@@ -321,6 +321,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("param", help="input file containing map and obstacles")
     parser.add_argument("output", help="output file with the schedule")
+    parser.add_argument("env_name", help="environment name from RWARE")
     args = parser.parse_args()
 
     ## Read from input file
@@ -331,7 +332,7 @@ def main():
     #         print(exc)
 
     # warehouse = Warehouse(3, 3, 2, 10, 3, 3, 10, None, None, RewardType.GLOBAL)
-    warehouse = gym.make("rware-tiny-2ag-v1")
+    warehouse = gym.make(args.env_name)
     warehouse.reset()
     ## a list
     # dimension = param["map"]["dimensions"]
@@ -340,8 +341,8 @@ def main():
 
     ## a list of coordinates in tuples (x, y)
     # obstacles = param["map"]["obstacles"]
-    obstacles = [(0, 0), (5, 5), (8, 9)]
-    # obstacles = []
+    # obstacles = [(0, 0), (5, 5), (8, 9)]
+    obstacles = []
     # print(obstacles)
 
     ## a list of dictionaries
