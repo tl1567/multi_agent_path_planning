@@ -57,9 +57,10 @@ def main():
     ## a list of dictionaries
     ## {'start': coordinates (list), 'goal': coordinates (list), 'name': 'agent{id}'}
     # agents = param['agents']    
-    agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
-    goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
-
+    agents_loc = [[agent.y.item(), agent.x.item()] for agent in warehouse.agents]
+    goals = [[shelf.y.item(), shelf.x.item()] for shelf in warehouse.request_queue]
+    # agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
+    # goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
 
 
     ## Shelf requesting the closest agent to pick it up
@@ -108,13 +109,13 @@ def main():
         yaml.dump(param, param_file)
 
     ## Output file
-    with open(args.output, 'r') as output_yaml:
-        try:
-            output = yaml.load(output_yaml, Loader=yaml.FullLoader)
-        except yaml.YAMLError as exc:
-            print(exc)
+    # with open(args.output, 'r') as output_yaml:
+    #     try:
+    #         output = yaml.load(output_yaml, Loader=yaml.FullLoader)
+    #     except yaml.YAMLError as exc:
+    #         print(exc)
 
-    # output = {"schedule": None}
+    output = {"schedule": {f'agent{i}': [] for i in range(warehouse.n_agents)}}
 
     for i in range(len(param["agents"])):
         sipp_planner = SippPlanner(param, i)

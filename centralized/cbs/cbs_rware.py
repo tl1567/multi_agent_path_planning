@@ -348,8 +348,10 @@ def main():
     ## a list of dictionaries
     ## {'start': coordinates (list), 'goal': coordinates (list), 'name': 'agent{id}'}
     # agents = param['agents']    
-    agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
-    goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
+    agents_loc = [[agent.y.item(), agent.x.item()] for agent in warehouse.agents]
+    goals = [[shelf.y.item(), shelf.x.item()] for shelf in warehouse.request_queue]
+    # agents_loc = [[agent.x.item(), agent.y.item()] for agent in warehouse.agents]
+    # goals = [[shelf.x.item(), shelf.y.item()] for shelf in warehouse.request_queue]
 
 
 
