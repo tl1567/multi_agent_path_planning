@@ -330,7 +330,8 @@ def main():
     #     except yaml.YAMLError as exc:
     #         print(exc)
 
-    warehouse = Warehouse(3, 3, 2, 10, 3, 3, 10, None, None, RewardType.GLOBAL)
+    # warehouse = Warehouse(3, 3, 2, 10, 3, 3, 10, None, None, RewardType.GLOBAL)
+    warehouse = gym.make("rware-tiny-2ag-v1")
     warehouse.reset()
     ## a list
     # dimension = param["map"]["dimensions"]
@@ -357,6 +358,12 @@ def main():
         return dist
 
     dist = compute_dist_agents_goals(agents_loc, goals)
+
+    def compute_dist_argmins(dist):
+        dist_argmins = [np.argmin(dist[j]) for j in range(len(goals))]
+        return dist_argmins
+
+    dist_argmins = compute_dist_argmins(dist)
 
     ## solve recursively the goal of each agent (the agent with the minimum distance to a goal will be assigned with that goal;
     ## both the agent and the goal will be removed from the queues, and this is done recursively)
