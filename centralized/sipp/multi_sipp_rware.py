@@ -25,14 +25,14 @@ import gym
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("param", help="input file containing map and dynamic obstacles")
-    parser.add_argument("output", help="output file with the schedule")
+    # parser.add_argument("param", help="input file containing map and dynamic obstacles")
+    # parser.add_argument("output", help="output file with the schedule")
     parser.add_argument("env_name", help="environment name from RWARE")
     
     args = parser.parse_args()
     
     ## Read Map
-    # with open(args.param, 'r') as param_file:
+    # with open('input_' + args.env_name + '.yaml', 'r') as param_file:
     #     try:
     #         param = yaml.load(map_file, Loader=yaml.FullLoader)
     #     except yaml.YAMLError as exc:
@@ -105,11 +105,11 @@ def main():
     param["agents"] = agents
     param["dynamic_obstacles"] = dynamic_obstacles
 
-    with open(args.param, 'w') as param_file:
+    with open('input_' + args.env_name + '.yaml', 'w') as param_file:
         yaml.dump(param, param_file)
 
     ## Output file
-    # with open(args.output, 'r') as output_yaml:
+    # with open('output_' + args.env_name + '.yaml', 'r') as output_yaml:
     #     try:
     #         output = yaml.load(output_yaml, Loader=yaml.FullLoader)
     #     except yaml.YAMLError as exc:
@@ -125,7 +125,7 @@ def main():
             output["schedule"].update(plan)
             param["dynamic_obstacles"].update(plan)
 
-            with open(args.output, 'w') as output_yaml:
+            with open('output_' + args.env_name + '.yaml', 'w') as output_yaml:
                 yaml.safe_dump(output, output_yaml)  
         else: 
             print("Plan not found")

@@ -319,8 +319,8 @@ class CBS(object):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("param", help="input file containing map and obstacles")
-    parser.add_argument("output", help="output file with the schedule")
+    # parser.add_argument("param", help="input file containing map and obstacles")
+    # parser.add_argument("output", help="output file with the schedule")
     parser.add_argument("env_name", help="environment name from RWARE")
     args = parser.parse_args()
 
@@ -396,7 +396,7 @@ def main():
     param["map"] = {"dimensions": dimension, "obstacles": obstacles}
     param["agents"] = agents
 
-    with open(args.param, 'w') as param_file:
+    with open('input_' + args.env_name + '.yaml', 'w') as param_file:
         yaml.dump(param, param_file)
 
     env = Environment(dimension, agents, obstacles)
@@ -421,7 +421,7 @@ def main():
 
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
-    with open(args.output, 'w') as output_yaml:
+    with open('output_' + args.env_name + '.yaml', 'w') as output_yaml:
         yaml.safe_dump(output, output_yaml)
 
 

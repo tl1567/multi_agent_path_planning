@@ -1,0 +1,112 @@
+agents:
+- goal:
+  - 26
+  - 1
+  name: agent0
+  start:
+  - 26
+  - 0
+- goal:
+  - 12
+  - 7
+  name: agent1
+  start:
+  - 12
+  - 6
+- goal:
+  - 24
+  - 1
+  name: agent2
+  start:
+  - 24
+  - 2
+- goal:
+  - 14
+  - 5
+  name: agent3
+  start:
+  - 14
+  - 7
+- goal:
+  - 17
+  - 11
+  name: agent4
+  start:
+  - 17
+  - 14
+- goal:
+  - 16
+  - 5
+  name: agent5
+  start:
+  - 15
+  - 3
+- goal:
+  - 5
+  - 5
+  name: agent6
+  start:
+  - 3
+  - 6
+- goal:
+  - 24
+  - 13
+  name: agent7
+  start:
+  - 24
+  - 8
+- goal:
+  - 23
+  - 2
+  name: agent8
+  start:
+  - 19
+  - 4
+- goal:
+  - 6
+  - 1
+  name: agent9
+  start:
+  - 7
+  - 6
+- goal:
+  - 20
+  - 14
+  name: agent10
+  start:
+  - 12
+  - 15
+- goal:
+  - 11
+  - 4
+  name: agent11
+  start:
+  - 7
+  - 9
+- goal:
+  - 3
+  - 2
+  name: agent12
+  start:
+  - 6
+  - 12
+- goal:
+  - 23
+  - 14
+  name: agent13
+  start:
+  - 2
+  - 15
+- goal:
+  - 12
+  - 2
+  name: agent14
+  start:
+  - 1
+  - 13
+dynamic_obstacles: {}
+map:
+  dimensions:
+  - 29
+  - 16
+  obstacles: []
