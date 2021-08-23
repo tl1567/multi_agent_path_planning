@@ -392,7 +392,7 @@ def main():
     ## Write to input file 
     param = {}
     param["map"] = {"dimensions": dimension, "obstacles": obstacles}
-    param['agents'] = agents
+    param["agents"] = agents
 
     with open(args.param, 'w') as param_file:
         yaml.dump(param, param_file)
