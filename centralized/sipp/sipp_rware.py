@@ -47,8 +47,6 @@ class SippPlanner(SippGraph):
 
         s_start = State(self.start, 0) 
 
-        # print(self.start)
-        # print(self.sipp_graph)
         self.sipp_graph[self.start].g = 0.
         f_start = self.get_heuristic(self.start)
         self.sipp_graph[self.start].f = f_start
